@@ -11,15 +11,24 @@
 // 模拟一个 API 调用或耗时操作
 const fetchUserData = (id: number): Promise<{ id: number; name: string }> => {
     return new Promise((resolve, reject) => {
+        /**
+         * resolve: 成功时的回调函数。调用它会将 Promise 状态改为 "fulfilled" (已完成)，
+         *          并将结果传递出去。类似 Java 的 future.complete(value)。
+         * 
+         * reject:  失败时的回调函数。调用它会将 Promise 状态改为 "rejected" (已拒绝)，
+         *          并抛出一个错误。类似 Java 的 future.completeExceptionally(ex)。
+         */
         console.log(`正在请求用户数据 (ID: ${id})...`);
 
         // 模拟 1.5 秒的网络延迟
         setTimeout(() => {
             const success = true;
             if (success) {
-                resolve({ id: id, name: "Bruce Wayne" }); // 成功：类似 Java 的 future.complete()
+                // 任务成功，返回数据
+                resolve({ id: id, name: "Bruce Wayne" });
             } else {
-                reject(new Error("用户不存在")); // 失败：类似 Java 的 future.completeExceptionally()
+                // 任务失败，返回错误原因
+                reject(new Error("用户不存在"));
             }
         }, 1500);
     });
